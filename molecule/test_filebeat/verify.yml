@@ -1,0 +1,36 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: Example assertion
+    assert:
+      that: true
+
+  - name: Filebeat install status
+    package:
+      name: filebeat
+      state: "present"
+    check_mode: true
+    register: pkg_status
+  - name: Filebeat installed
+    assert:
+      that:
+        - not pkg_status.changed
+      fail_msg: "Filebeat is not install"
+      success_msg: "Filebeat is install!"
+
+  - name: Gathering facts
+    service_facts:
+  - name: See service Filebeat
+    debug:
+      msg: "{{ ansible_facts.services['filebeat.service'].state }}"
+  - name: Verify Filebeat is running
+    assert:
+      that:
+        - "'{{ ansible_facts.services['filebeat.service'].state }}' == 'running'"
+      fail_msg: "Filebeat not running"
+      success_msg: "Filebeat is running!"
+

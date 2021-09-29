@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include AnsiblePlaybook"
+      include_role:
+        name: "AnsiblePlaybook"

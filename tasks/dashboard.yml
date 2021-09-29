@@ -1,9 +1,10 @@
 ---
 - name: "Load kibana dashboard"
-  become: true
+#  become: true
   command:
     cmd: filebeat setup
     chdir: /usr/share/filebeat/bin
   register: filebeat_setup
   changed_when: false
-  until: filebeat_setup is succeeded
+  failed_when: "filebeat_setup.rc != 0 and filebeat_setup.rc != 1"
+#  ignore_errors: yes
