@@ -4,4 +4,4 @@
   tasks:
     - name: "Include AnsiblePlaybook"
       include_role:
-        name: "AnsiblePlaybook"
+        name: "filebeat"
